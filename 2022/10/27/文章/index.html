@@ -10,7 +10,11 @@
   
   <title>文章</title>
   <meta name="author" content="John Doe">
-  <meta name="description" content="BUGKU game1参考网上大佬的博客得到的解题思路开启题目后我们来到了游戏界面：在页面中没有发现什么提示，开始游戏后，发现游戏内玩家通过玩游戏可以获得一定的积分，那么试想是否可以通过将积分更改得很大得做法来通关获得flag。打开网站源码搜索关键词score字符串后发现关键的代码：从这几个参数可以">
+  <meta name="description" content="BUGKU game1参考网上大佬的博客得到的解题思路开启题目后我们来到了游戏界面：
+
+在页面中没有发现什么提示，开始游戏后，发现游戏内玩家通过玩游戏可以获得一定的积分，那么试想是否可以通过将积分更改得很大得做法来通关获得flag。打开网站源码搜索关键词score字符串后发现关键的代码：
+
+从这几个">
   
   
   <meta property="og:title" content="文章"/>
@@ -71,7 +75,19 @@
     <div class="picture-container">
       
     </div>
-    <h2 id="BUGKU-game1"><a href="#BUGKU-game1" class="headerlink" title="BUGKU game1"></a>BUGKU game1</h2><h1 id="参考网上大佬的博客得到的解题思路"><a href="#参考网上大佬的博客得到的解题思路" class="headerlink" title="参考网上大佬的博客得到的解题思路"></a>参考网上大佬的博客得到的解题思路</h1><p>开启题目后我们来到了游戏界面：<br><img src="/%E6%96%87%E7%AB%A0/1.jpg"><br>在页面中没有发现什么提示，开始游戏后，发现游戏内玩家通过玩游戏可以获得一定的积分，那么试想是否可以通过将积分更改得很大得做法来通关获得flag。<br>打开网站源码搜索关键词score字符串后发现关键的代码：<br><img src="/%E6%96%87%E7%AB%A0/2.png"><br>从这几个参数可以分析出：通过open创建了一个新的http请求，并制定了请求的方法为GET方法，其URL地址的相对地址为 ”score.php?score&#x3D;”+score+”&amp;ip&#x3D;”+ppp+”&amp;sign&#x3D;”+sign 各位noob ctfer要注意，这一串地址中，被双引号引起来的部分为url地址中的内容，而没有被双引号引起来的位置的score、ppp、sign等，则是待输入的值。<br>score是得分不言而喻，那么sign是什么呢，大家可以看代码中对sign的定义：<br>var sign &#x3D; Base64.encode(score.toString());<br>它将我们输入的score的内容，转换为对应的base64编码格式，在存放到sign中。<br>接下来用bp对网站传回的数据包进行分析和修改：<br><img src="/%E6%96%87%E7%AB%A0/3.png"><br>关键：score&#x3D;25&amp;ip&#x3D;220.200.12.197&amp;sign&#x3D;zMMjU&#x3D;&#x3D;&#x3D;<br>接下来对sign的值进行解码<br><img src="/%E6%96%87%E7%AB%A0/4.png"><br>解码失败<br>对不同分数值进行测试，发现sign值都以zM为开头而以&#x3D;&#x3D;为结尾，对MjU&#x3D;进行解码，得到25的值<br><img src="/%E6%96%87%E7%AB%A0/5.png"><br>接着将99999的值进行base64编码并输出在bp的重发器中修改数值就能正确的到flag<br><img src="/%E6%96%87%E7%AB%A0/6.png"><br>————————————————</p>
+    <h2 id="BUGKU-game1"><a href="#BUGKU-game1" class="headerlink" title="BUGKU game1"></a>BUGKU game1</h2><h1 id="参考网上大佬的博客得到的解题思路"><a href="#参考网上大佬的博客得到的解题思路" class="headerlink" title="参考网上大佬的博客得到的解题思路"></a>参考网上大佬的博客得到的解题思路</h1><p>开启题目后我们来到了游戏界面：</p>
+<img src="/2022/10/27/%E6%96%87%E7%AB%A0/1.jpg" class="">
+<p>在页面中没有发现什么提示，开始游戏后，发现游戏内玩家通过玩游戏可以获得一定的积分，那么试想是否可以通过将积分更改得很大得做法来通关获得flag。<br>打开网站源码搜索关键词score字符串后发现关键的代码：</p>
+<img src="/2022/10/27/%E6%96%87%E7%AB%A0/2.png" class="">
+<p>从这几个参数可以分析出：通过open创建了一个新的http请求，并制定了请求的方法为GET方法，其URL地址的相对地址为 ”score.php?score&#x3D;”+score+”&amp;ip&#x3D;”+ppp+”&amp;sign&#x3D;”+sign 各位noob ctfer要注意，这一串地址中，被双引号引起来的部分为url地址中的内容，而没有被双引号引起来的位置的score、ppp、sign等，则是待输入的值。<br>score是得分不言而喻，那么sign是什么呢，大家可以看代码中对sign的定义：<br>var sign &#x3D; Base64.encode(score.toString());<br>它将我们输入的score的内容，转换为对应的base64编码格式，在存放到sign中。<br>接下来用bp对网站传回的数据包进行分析和修改：</p>
+<img src="/2022/10/27/%E6%96%87%E7%AB%A0/3.png" class="">
+<p>关键：score&#x3D;25&amp;ip&#x3D;220.200.12.197&amp;sign&#x3D;zMMjU&#x3D;&#x3D;&#x3D;<br>接下来对sign的值进行解码</p>
+<img src="/2022/10/27/%E6%96%87%E7%AB%A0/4.png" class="">
+<p>解码失败<br>对不同分数值进行测试，发现sign值都以zM为开头而以&#x3D;&#x3D;为结尾，对MjU&#x3D;进行解码，得到25的值</p>
+<img src="/2022/10/27/%E6%96%87%E7%AB%A0/5.png" class="">
+<p>接着将99999的值进行base64编码并输出在bp的重发器中修改数值就能正确的到flag</p>
+<img src="/2022/10/27/%E6%96%87%E7%AB%A0/6.png" class="">
+<p>————————————————</p>
 
 
   </article>
