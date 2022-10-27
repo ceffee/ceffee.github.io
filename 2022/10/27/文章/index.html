@@ -8,12 +8,12 @@
   <meta name="google-site-verification" content="" />
   <meta name="referrer" content="unsafe-url">
   
-  <title>一道题</title>
+  <title>文章</title>
   <meta name="author" content="John Doe">
-  <meta name="description" content="">
+  <meta name="description" content="BUGKU game1参考网上大佬的博客得到的解题思路开启题目后我们来到了游戏界面：![](屏幕截图 2022-10-27 125225.png)在页面中没有发现什么提示，开始游戏后，发现游戏内玩家通过玩游戏可以获得一定的积分，那么试想是否可以通过将积分更改得很大得做法来通关获得flag。打开网站源">
   
   
-  <meta property="og:title" content="一道题"/>
+  <meta property="og:title" content="文章"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:site_name" content="Hexo"/>
   <link href="/apple-touch-icon-precomposed.png" sizes="180x180" rel="apple-touch-icon-precomposed">
@@ -43,14 +43,14 @@
       
   
     <h1 class="page-title center">
-        一道题
+        文章
     </h1>
   
 
 
     </div>
     <div class="meta center">
-      <time datetime="2022-10-26T16:00:00.000Z" itemprop="datePublished">
+      <time datetime="2022-10-27T03:43:56.000Z" itemprop="datePublished">
   <svg class="i-calendar" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
     <path d="M2 6 L2 30 30 30 30 6 Z M2 15 L30 15 M7 3 L7 9 M13 3 L13 9 M19 3 L19 9 M25 3 L25 9"></path>
   </svg>
@@ -66,12 +66,13 @@
     </div>
     <hr>
     
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text"></span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BUGKU-game1"><span class="toc-text">BUGKU game1</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E7%BD%91%E4%B8%8A%E5%A4%A7%E4%BD%AC%E7%9A%84%E5%8D%9A%E5%AE%A2%E5%BE%97%E5%88%B0%E7%9A%84%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="toc-text">参考网上大佬的博客得到的解题思路</span></a>
     
     <div class="picture-container">
       
     </div>
-    <h1 id=""><a href="#" class="headerlink" title=""></a></h1>
+    <h2 id="BUGKU-game1"><a href="#BUGKU-game1" class="headerlink" title="BUGKU game1"></a>BUGKU game1</h2><h1 id="参考网上大佬的博客得到的解题思路"><a href="#参考网上大佬的博客得到的解题思路" class="headerlink" title="参考网上大佬的博客得到的解题思路"></a>参考网上大佬的博客得到的解题思路</h1><p>开启题目后我们来到了游戏界面：<br>![](屏幕截图 2022-10-27 125225.png)<br>在页面中没有发现什么提示，开始游戏后，发现游戏内玩家通过玩游戏可以获得一定的积分，那么试想是否可以通过将积分更改得很大得做法来通关获得flag。<br>打开网站源码搜索关键词score字符串后发现关键的代码：<br>![](屏幕截图 2022-10-27 130225.png)<br>从这几个参数可以分析出：通过open创建了一个新的http请求，并制定了请求的方法为GET方法，其URL地址的相对地址为 ”score.php?score&#x3D;”+score+”&amp;ip&#x3D;”+ppp+”&amp;sign&#x3D;”+sign 各位noob ctfer要注意，这一串地址中，被双引号引起来的部分为url地址中的内容，而没有被双引号引起来的位置的score、ppp、sign等，则是待输入的值。<br>score是得分不言而喻，那么sign是什么呢，大家可以看代码中对sign的定义：<br>var sign &#x3D; Base64.encode(score.toString());<br>它将我们输入的score的内容，转换为对应的base64编码格式，在存放到sign中。<br>接下来用bp对网站传回的数据包进行分析和修改：<br>![](屏幕截图 2022-10-27 131958.png)<br>关键：score&#x3D;25&amp;ip&#x3D;220.200.12.197&amp;sign&#x3D;zMMjU&#x3D;&#x3D;&#x3D;<br>接下来对sign的值进行解码<br>![](屏幕截图 2022-10-27 132416.png)<br>解码失败<br>对不同分数值进行测试，发现sign值都以zM为开头而以&#x3D;&#x3D;为结尾，对MjU&#x3D;进行解码，得到25的值<br>![](屏幕截图 2022-10-27 132648.png)<br>接着将99999的值进行base64编码并输出在bp的重发器中修改数值就能正确的到flag<br>![flag](屏幕截图 2022-10-27 133157.png)<br>————————————————</p>
+
 
   </article>
   <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
